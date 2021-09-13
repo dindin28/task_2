@@ -1,7 +1,7 @@
-#ifndef _TASK_1_INCLUDE_TASK_1_PERFORMANCE_H_
-#define _TASK_1_INCLUDE_TASK_1_PERFORMANCE_H_
+#ifndef _TASK_2_INCLUDE_TASK_2_PERFORMANCE_H_
+#define _TASK_2_INCLUDE_TASK_2_PERFORMANCE_H_
 
-#include <task_1/participant.h>
+#include <task_2/participant.h>
 
 class Performance
 {
@@ -27,8 +27,8 @@ public:
 
   void Print();
 
-  friend std::ostream& operator<< (std::ostream &out, const Performance &obj);
-  friend std::istream& operator>> (std::istream &in, Performance &obj);
+  friend std::ostream &operator<<(std::ostream &out, const Performance &obj);
+  friend std::istream &operator>>(std::istream &in, Performance &obj);
 
 private:
   // performance_type_= 0(false) => team performance

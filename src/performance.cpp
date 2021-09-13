@@ -1,7 +1,7 @@
 // This is a personal academic project. Dear PVS-Studio, please check it.
 // PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
 
-#include <task_1/performance.h>
+#include <task_2/performance.h>
 
 //Initialization of static variables
 int Performance::number_of_performance_ = 0;
@@ -30,7 +30,7 @@ Performance::Performance(bool performance_type, Participant participant, int seq
 {
 #ifdef SHOW_CONSTRUCTORS
   std::cout << "Performance(bool performance_type, Participant participant, int sequence_number, int result)"
-  << std::endl;
+            << std::endl;
 #endif
   number_of_performance_++;
 }

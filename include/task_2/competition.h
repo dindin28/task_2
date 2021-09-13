@@ -1,10 +1,10 @@
-#ifndef _TASK_1_INCLUDE_TASK_1_COMPETITION_H_
-#define _TASK_1_INCLUDE_TASK_1_COMPETITION_H_
+#ifndef _TASK_2_INCLUDE_TASK_2_COMPETITION_H_
+#define _TASK_2_INCLUDE_TASK_2_COMPETITION_H_
 
-#include <task_1/performance.h>
-#include <task_1/participant.h>
+#include <task_2/performance.h>
+#include <task_2/participant.h>
 
-class Competition: public Participant
+class Competition : public Participant
 {
 public:
   Competition();
@@ -23,8 +23,8 @@ public:
   void Print();
   void PrintShortly();
 
-  friend std::ostream& operator<< (std::ostream &out, const Competition &obj);
-  friend std::istream& operator>> (std::istream &in, Competition &obj);
+  friend std::ostream &operator<<(std::ostream &out, const Competition &obj);
+  friend std::istream &operator>>(std::istream &in, Competition &obj);
 
 private:
   char *competition_name_;

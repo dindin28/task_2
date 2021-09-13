@@ -1,5 +1,5 @@
-#ifndef _TASK_1_INCLUDE_TASK_1_DATE_H_
-#define _TASK_1_INCLUDE_TASK_1_DATE_H_
+#ifndef _TASK_2_INCLUDE_TASK_2_DATE_H_
+#define _TASK_2_INCLUDE_TASK_2_DATE_H_
 
 #include <iostream>
 
@@ -23,8 +23,8 @@ public:
 
   void Print();
 
-  friend std::ostream& operator<< (std::ostream &out, const Date &obj);
-  friend std::istream& operator>> (std::istream &in, Date &obj);
+  friend std::ostream &operator<<(std::ostream &out, const Date &obj);
+  friend std::istream &operator>>(std::istream &in, Date &obj);
 
 private:
   int day_, month_, year_;
