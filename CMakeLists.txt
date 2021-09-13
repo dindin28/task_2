@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(task_1)
+project(task_2)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -9,6 +9,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 #PVS-Studio option
 #========================
 option(ANALYZE "Analyze code with PVS-Studio" OFF)
+
+#========================
+#SHOW_CONSTRUCTORS option
+#========================
+option(SHOW_CONSTRUCTORS "Show constructors" OFF)
+
+if(SHOW_CONSTRUCTORS)
+  add_compile_definitions(SHOW_CONSTRUCTORS)
+endif()
 
 #========================
 #Headers

@@ -15,6 +15,10 @@ Performance::Performance()
       sequence_number_(1),
       result_(100)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Performance()" << std::endl;
+#endif
+
   number_of_performance_++;
 }
 
@@ -24,6 +28,10 @@ Performance::Performance(bool performance_type, Participant participant, int seq
       sequence_number_(sequence_number),
       result_(result)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Performance(bool performance_type, Participant participant, int sequence_number, int result)"
+  << std::endl;
+#endif
   number_of_performance_++;
 }
 
@@ -33,6 +41,10 @@ Performance::Performance(const Performance &copy)
       sequence_number_(copy.sequence_number_),
       result_(copy.result_)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Performance(const Performance &copy)" << std::endl;
+#endif
+
   number_of_performance_++;
 }
 
@@ -46,14 +58,19 @@ Performance &Performance::operator=(const Performance &copy)
   return *this;
 }
 
-Performance::~Performance() {}
+Performance::~Performance()
+{
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "~Performance()" << std::endl;
+#endif
+}
 
 //Getters
-bool Performance::GetPerformanceType() { return performance_type_; }
-int Performance::GetNumberOfCompetitions() { return number_of_performance_; }
-Participant Performance::GetParticipant() { return participant_; }
-int Performance::GetSequenceNumber() { return sequence_number_; }
-int Performance::GetResult() { return result_; }
+bool Performance::GetPerformanceType() const { return performance_type_; }
+int Performance::GetNumberOfCompetitions() const { return number_of_performance_; }
+Participant Performance::GetParticipant() const { return participant_; }
+int Performance::GetSequenceNumber() const { return sequence_number_; }
+int Performance::GetResult() const { return result_; }
 
 //Selectors
 Performance &Performance::SetPerformanceType(bool performance_type)

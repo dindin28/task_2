@@ -12,9 +12,9 @@ public:
   ~Date();
 
   //Getters
-  int GetDay();
-  int GetMonth();
-  int GetYear();
+  int GetDay() const;
+  int GetMonth() const;
+  int GetYear() const;
 
   //Selectors
   Date &SetDay(int day);

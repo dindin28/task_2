@@ -7,26 +7,58 @@
 #include <string>
 
 Competition::Competition()
-    : performance_size_(0), performance_pointer_(nullptr)
+    : performance_size_(0), performance_pointer_(nullptr), Participant(Participant())
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Competition()" << std::endl;
+#endif
+
   const char *name = "Olympic Games";
-  name_ = new char[strlen(name) + 1];
-  strcpy(name_, name);
+  competition_name_ = new char[strlen(name) + 1];
+  strcpy(competition_name_, name);
 }
 
 Competition::Competition(const char *name)
-    : performance_size_(0), performance_pointer_(nullptr)
+    : performance_size_(0), performance_pointer_(nullptr), Participant(Participant())
 {
-  name_ = new char[strlen(name) + 1];
-  strcpy(name_, name);
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Competition(const char *name)" << std::endl;
+#endif
+
+  competition_name_ = new char[strlen(name) + 1];
+  strcpy(competition_name_, name);
 }
 
 Competition::Competition(const char *name, Performance *performance_pointer, int performance_size)
-    : performance_size_(performance_size)
+    : performance_size_(performance_size), Participant(Participant())
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Competition(const char *name, Performance *performance_pointer, int performance_size)" << std::endl;
+#endif
+
   //copy name
-  name_ = new char[strlen(name) + 1];
-  strcpy(name_, name);
+  competition_name_ = new char[strlen(name) + 1];
+  strcpy(competition_name_, name);
+
+  //copy performance_pointer
+  performance_pointer_ = new Performance[performance_size];
+  for (int i = 0; i < performance_size; i++)
+  {
+    performance_pointer_[i] = performance_pointer[i];
+  }
+}
+
+Competition::Competition(const char *name, Performance *performance_pointer, int performance_size, const char *par_name, const char *par_surname, const Date &par_date)
+    : performance_size_(performance_size), Participant(par_name, par_surname, par_date)
+{
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Competition(const char *name, Performance *performance_pointer, int performance_size, const char *par_name, const char *par_surname, const Date &par_date)"
+            << std::endl;
+#endif
+
+  //copy name
+  competition_name_ = new char[strlen(name) + 1];
+  strcpy(competition_name_, name);
 
   //copy performance_pointer
   performance_pointer_ = new Performance[performance_size];
@@ -37,11 +69,15 @@ Competition::Competition(const char *name, Performance *performance_pointer, int
 }
 
 Competition::Competition(const Competition &copy)
-    : performance_size_(copy.performance_size_)
+    : performance_size_(copy.performance_size_), Participant(copy.GetName(), copy.GetSurname(), copy.GetDate())
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Competition(const Competition &copy)" << std::endl;
+#endif
+
   //copy name
-  name_ = new char[strlen(copy.name_) + 1];
-  strcpy(name_, copy.name_);
+  competition_name_ = new char[strlen(copy.competition_name_) + 1];
+  strcpy(competition_name_, copy.competition_name_);
 
   //copy performance_pointer
   performance_pointer_ = new Performance[copy.performance_size_];
@@ -55,13 +91,18 @@ Competition &Competition::operator=(const Competition &copy)
 {
   if (this != &copy)
   {
+    //Participant variables
+    SetName(copy.GetName());
+    SetSurname(copy.GetSurname());
+    SetDate(copy.GetDate());
+
     //Name
-    if (strlen(name_) != 0)
+    if (strlen(competition_name_) != 0)
     {
-      delete[] name_;
+      delete[] competition_name_;
     }
-    name_ = new char[strlen(copy.name_) + 1];
-    strcpy(name_, copy.name_);
+    competition_name_ = new char[strlen(copy.competition_name_) + 1];
+    strcpy(competition_name_, copy.competition_name_);
 
     //Performance pointer
     if (performance_size_ != 0)
@@ -83,9 +124,13 @@ Competition &Competition::operator=(const Competition &copy)
 
 Competition::~Competition()
 {
-  if (strlen(name_) != 0)
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "~Competition()" << std::endl;
+#endif
+
+  if (strlen(competition_name_) != 0)
   {
-    delete[] name_;
+    delete[] competition_name_;
   }
   if (performance_size_ != 0)
   {
@@ -109,21 +154,22 @@ void Competition::AddPerformance(const Performance &performance)
   performance_size_++;
 }
 
-const char *Competition::GetName() { return name_; }
-Competition &Competition::SetName(const char *name)
+const char *Competition::GetCompetitionName() const { return competition_name_; }
+Competition &Competition::SetCompetitionName(const char *name)
 {
-  if (strlen(name_) != 0)
+  if (strlen(competition_name_) != 0)
   {
-    delete[] name_;
+    delete[] competition_name_;
   }
-  name_ = new char[strlen(name) + 1];
-  strcpy(name_, name);
+  competition_name_ = new char[strlen(name) + 1];
+  strcpy(competition_name_, name);
   return *this;
 }
 
 void Competition::Print()
 {
-  std::cout << name_ << std::endl;
+  Participant::Print();
+  std::cout << competition_name_ << std::endl;
   for (int i = 0; i < performance_size_; i++)
   {
     std::cout << i + 1 << ". " << performance_pointer_[i] << std::endl;
@@ -132,7 +178,8 @@ void Competition::Print()
 
 void Competition::PrintShortly()
 {
-  std::cout << name_ << std::endl;
+  Participant::Print();
+  std::cout << competition_name_ << std::endl;
   for (int i = 0; i < performance_size_; i++)
   {
     std::cout << i + 1 << ". " << performance_pointer_[i].GetParticipant().GetSurname() << std::endl;
@@ -141,7 +188,13 @@ void Competition::PrintShortly()
 
 std::ostream &operator<<(std::ostream &out, const Competition &obj)
 {
-  out << obj.name_ << std::endl;
+  //Participant out
+  out << obj.GetName() << " "
+      << obj.GetSurname() << " ("
+      << obj.GetDate() << ")" << std::endl;
+
+  //Competition out
+  out << obj.competition_name_ << std::endl;
   for (int i = 0; i < obj.performance_size_; i++)
   {
     out << i + 1 << ") " << obj.performance_pointer_[i] << std::endl;
@@ -156,12 +209,12 @@ std::istream &operator>>(std::istream &in, Competition &obj)
   std::cout << "Enter new name of competition: ";
   in >> buff_string;
 
-  if (strlen(obj.name_) != 0)
+  if (strlen(obj.competition_name_) != 0)
   {
-    delete[] obj.name_;
+    delete[] obj.competition_name_;
   }
-  obj.name_ = new char[buff_string.length() + 1];
-  strcpy(obj.name_, buff_string.c_str());
+  obj.competition_name_ = new char[buff_string.length() + 1];
+  strcpy(obj.competition_name_, buff_string.c_str());
 
   return in;
 }

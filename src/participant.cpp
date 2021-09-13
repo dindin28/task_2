@@ -9,6 +9,10 @@
 Participant::Participant()
     : date_(15, 8, 2002)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Participant()" << std::endl;
+#endif
+
   const char *name = "Dima";
   const char *surname = "Shtrikker";
   name_ = new char[strlen(name) + 1];
@@ -20,6 +24,10 @@ Participant::Participant()
 Participant::Participant(const char *name, const char *surname, const Date &date)
     : date_(date)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Participant(const char *name, const char *surname, const Date &date)" << std::endl;
+#endif
+
   name_ = new char[strlen(name) + 1];
   surname_ = new char[strlen(surname) + 1];
   strcpy(name_, name);
@@ -29,6 +37,10 @@ Participant::Participant(const char *name, const char *surname, const Date &date
 Participant::Participant(const Participant &copy)
     : date_(copy.date_)
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Participant(const Participant &copy)" << std::endl;
+#endif
+
   name_ = new char[strlen(copy.name_) + 1];
   surname_ = new char[strlen(copy.surname_) + 1];
   strcpy(name_, copy.name_);
@@ -64,6 +76,10 @@ Participant &Participant::operator=(const Participant &copy)
 
 Participant::~Participant()
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "~Participant()" << std::endl;
+#endif
+
   if (strlen(name_) != 0)
   {
     delete[] name_;
@@ -75,9 +91,9 @@ Participant::~Participant()
 }
 
 //Getters
-const char *Participant::GetName() { return name_; }
-const char *Participant::GetSurname() { return surname_; }
-Date Participant::GetDate() { return date_; }
+const char *Participant::GetName() const { return name_; }
+const char *Participant::GetSurname() const { return surname_; }
+Date Participant::GetDate() const { return date_; }
 
 //Selectors
 Participant &Participant::SetName(const char *name)

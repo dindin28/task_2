@@ -10,6 +10,10 @@
 
 Date::Date()
 {
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Date()" << std::endl;
+#endif
+
   std::time_t now = std::time(nullptr);
   char buff[4];
 
@@ -24,17 +28,32 @@ Date::Date()
 }
 
 Date::Date(int day, int month, int year)
-    : day_(day), month_(month), year_(year) {}
+    : day_(day), month_(month), year_(year)
+{
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Date(int day, int month, int year)" << std::endl;
+#endif
+}
 
 Date::Date(const Date &copy)
-    : day_(copy.day_), month_(copy.month_), year_(copy.year_) {}
+    : day_(copy.day_), month_(copy.month_), year_(copy.year_)
+{
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "Date(const Date &copy)" << std::endl;
+#endif
+}
 
-Date::~Date() {}
+Date::~Date()
+{
+#ifdef SHOW_CONSTRUCTORS
+  std::cout << "~Date()" << std::endl;
+#endif
+}
 
 //Getters
-int Date::GetDay() { return day_; }
-int Date::GetMonth() { return month_; }
-int Date::GetYear() { return year_; }
+int Date::GetDay() const { return day_; }
+int Date::GetMonth() const { return month_; }
+int Date::GetYear() const { return year_; }
 
 //Selectors
 Date &Date::SetDay(int day)
@@ -63,16 +82,16 @@ void Date::Print()
             << std::setw(4) << year_ << std::endl;
 }
 
-std::ostream& operator<< (std::ostream &out, const Date &obj)
+std::ostream &operator<<(std::ostream &out, const Date &obj)
 {
   out << std::setfill('0');
   out << std::setw(2) << obj.day_ << "/"
-            << std::setw(2) << obj.month_ << "/"
-            << std::setw(4) << obj.year_;
-    return out;
+      << std::setw(2) << obj.month_ << "/"
+      << std::setw(4) << obj.year_;
+  return out;
 }
 
-std::istream& operator>> (std::istream &in, Date &obj)
+std::istream &operator>>(std::istream &in, Date &obj)
 {
   std::cout << "Enter new day of date: ";
   in >> obj.day_;

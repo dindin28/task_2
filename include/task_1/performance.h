@@ -13,11 +13,11 @@ public:
   ~Performance();
 
   //Getters
-  bool GetPerformanceType();
-  int GetNumberOfCompetitions();
-  Participant GetParticipant();
-  int GetSequenceNumber();
-  int GetResult();
+  bool GetPerformanceType() const;
+  int GetNumberOfCompetitions() const;
+  Participant GetParticipant() const;
+  int GetSequenceNumber() const;
+  int GetResult() const;
 
   //Selectors
   Performance &SetPerformanceType(bool performance_type);

@@ -15,9 +15,9 @@ public:
   ~Participant();
 
   //Getters
-  const char *GetName();
-  const char *GetSurname();
-  Date GetDate();
+  const char *GetName() const;
+  const char *GetSurname() const;
+  Date GetDate() const;
 
   //Selectors
   Participant &SetName(const char *name);

@@ -2,21 +2,23 @@
 #define _TASK_1_INCLUDE_TASK_1_COMPETITION_H_
 
 #include <task_1/performance.h>
+#include <task_1/participant.h>
 
-class Competition
+class Competition: public Participant
 {
 public:
   Competition();
   Competition(const char *name);
   Competition(const char *name, Performance *performance_pointer, int performance_size);
+  Competition(const char *name, Performance *performance_pointer, int performance_size, const char *par_name, const char *par_surname, const Date &par_date);
   Competition(const Competition &copy);
   Competition &operator=(const Competition &copy);
   ~Competition();
 
   void AddPerformance(const Performance &performance);
 
-  const char *GetName();
-  Competition &SetName(const char *name);
+  const char *GetCompetitionName() const;
+  Competition &SetCompetitionName(const char *name);
 
   void Print();
   void PrintShortly();
@@ -25,7 +27,7 @@ public:
   friend std::istream& operator>> (std::istream &in, Competition &obj);
 
 private:
-  char *name_;
+  char *competition_name_;
   Performance *performance_pointer_;
   int performance_size_;
 }; //Class (Competition)
